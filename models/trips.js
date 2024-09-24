@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const tripsSchema = mongoose.Schema({
     departure :String, 
     arrival :String, 
-    date :Date(),
+    date :{ type: Date},
     price :Number
 });
 
