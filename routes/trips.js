@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Trip = require("../models/trips")
-//const moment =require('moment')
+const moment =require('moment')
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -19,7 +19,7 @@ const Trip = require("../models/trips")
 // })
 
 router.get("/:departure/:arrival/:date", (req, res) => {
-    
+
     const dateStart = moment.utc(req.params.date).startOf("day").toDate();
     const dateEnd = moment.utc(req.params.date).endOf("day").toDate();
 
