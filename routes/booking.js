@@ -11,7 +11,7 @@ const moment =require('moment')
 // });
 
 router.get("/",(req,res)=>{
-    const date = moment.utc(req.params.date).endOf("day").fromNow();
+    const date = moment.utc(req.params.date).endOf("day").toDate();
     console.log(date);
 
 })

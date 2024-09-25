@@ -8,29 +8,32 @@ const Trip = require("../models/trips")
 //   res.render('index', { title: 'Express' });
 // });
 
-router.get("/", (req, res) => {
-    Trip.find({departure: {$regex: new RegExp(req.body.departure,"i")} , arrival :{$regex: new RegExp(req.body.arrival,"i")}})
-    .then((data) => res.json({ result : true , data }));
-})
+// router.get("/", (req, res) => {
+//     Trip.find({departure: {$regex: new RegExp(req.body.departure,"i")} , arrival :{$regex: new RegExp(req.body.arrival,"i")}})
+//     .then((data) => res.json({ result : true , data }));
+// })
 
 // router.get("/", (req, res) => {
 //     Trip.find()
 //     .then((allTrip) => res.json(allTrip));
 // })
 
-// router.get("/", (req, res) => {
-//     Trip.find({departure: req.body.departure , arrival: req.body.arrival})
-//     .then((data) => res.json(data));
-// })
+router.get("/:departure/:arrival/:date", (req, res) => {
+    
+    const dateStart = moment.utc(req.params.date).startOf("day").toDate();
+    const dateEnd = moment.utc(req.params.date).endOf("day").toDate();
 
-// if(!req.params.departure ||!req.params.arrival||!req.params.date){
-//     return res.status(400).json({message:`les paramètre "departure","arrival" et "date" sont repris`})
-// }
+    if(!req.params.departure ||!req.params.arrival||!req.params.date){
+    return res.status(400).json({message:`les paramètre "departure","arrival" et "date" sont repris`})
+}
 
-// router.get("/", (req, res) => {
-// Trip.find({departure: req.body.departure , arrival: req.body.arrival})
-// .then((data) => res.json({ result : true , data }))
-// })
+Trip.find({departure: {$regex: new RegExp(req.body.departure,"i")}, 
+            arrival:{$regex: new RegExp(req.body.arrival,"i")},
+            date:{$gte:dateStart,$lte:dateEnd}
+        })
+    .then((data) => 
+        res.json({trip :data}));
+})
 
 //route pour book : 
 
