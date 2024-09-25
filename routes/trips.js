@@ -31,9 +31,30 @@ Trip.find({departure: {$regex: new RegExp(req.params.departure,"i")},
             arrival:{$regex: new RegExp(req.params.arrival,"i")},
             date:{$gte:dateStart,$lte:dateEnd}
         })
-    .then((data) => 
-        res.json({trip :data}));
-})
+        .lean()
+        .then((data) => {
+          // console.log(data);
+          if (data.length > 0) {
+            const tripsDate = data.map((obj) => {
+              return {
+                ...obj,
+                time: moment.utc(obj.date).format('H:mm'),
+              };
+            });
+    
+        if (tripsDate == []) {
+          return res.json({
+            result: false,
+            error: 'Date not found for this trip',
+          });
+        } else {
+          return res.json({ result: true, trips: tripsDate });
+        }
+      } else {
+        return res.json({ result: false, error: 'Trip not found' });
+      }
+    });
+    });
 
 //route pour book : 
 
