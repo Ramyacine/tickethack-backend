@@ -38,7 +38,7 @@ Trip.find({departure: {$regex: new RegExp(req.params.departure,"i")},
 //route pour book : 
 
 router.post("/", (req, res) => {
-    Trip.findOne({departure: {$regex: new RegExp(req.body.departure,"i")} , arrival :{$regex: new RegExp(req.body.arrival,"i")}})
+    Trip.findOne({departure: {$regex: new RegExp(req.body.departure,"i")} , arrival :{$regex: new RegExp(req.body.arrival,"i")}, date:{}})
     .then(data => {
 
     const newCart = new Cart({
