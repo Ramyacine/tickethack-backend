@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const bookSchema = mongoose.Schema({
     departure :String, 
     arrival :String, 
-    date :{ type: Date},
+    date :Date,
     price :Number
+
 });
 
 const Book = mongoose.model('booking', bookSchema);
