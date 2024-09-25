@@ -27,8 +27,8 @@ router.get("/:departure/:arrival/:date", (req, res) => {
     return res.status(400).json({message:`les paramètre "departure","arrival" et "date" sont repris`})
 }
 
-Trip.find({departure: {$regex: new RegExp(req.body.departure,"i")}, 
-            arrival:{$regex: new RegExp(req.body.arrival,"i")},
+Trip.find({departure: {$regex: new RegExp(req.params.departure,"i")}, 
+            arrival:{$regex: new RegExp(req.params.arrival,"i")},
             date:{$gte:dateStart,$lte:dateEnd}
         })
     .then((data) => 
